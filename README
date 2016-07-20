@@ -1,4 +1,19 @@
 # dhcpconfman
+This perl script takes 3 arguments:
+MAC-ADDRESS IP-ADDRESS USER-NAME
+It then generates a host entry for dhcpd static reservations.
+Of course you could manually add these, but this script is designed to prevent
+fat fingering / breaking the config. 
+
+It verifies that: 
+- MAC-ADDRESS is a valid MAC
+- IP-ADDRESS is a valid IP
+- None of the 3 arguments already exist in the config
+
+It also allows dynamic DNS domain assignment in the config, based off of a hash
+mapping Classful Subnets to DNS domains. 
+
+
 You will need to add a file: dhcpconfman.cfg to the code directory like so:
 ------ BEGIN EXAMPLE
 $reservationsFile = "LOCATION OF THE RESERVATION FILE";
@@ -7,3 +22,7 @@ $reservationsFile = "LOCATION OF THE RESERVATION FILE";
     "10.11." => "localdomain2.org"
 );
 ------ END EXAMPLE
+
+
+Ian Reynolds
+The MIS Department
