@@ -4,7 +4,7 @@
 # Generates DHCPd host configuration files, for inclusion into dhcpd
 # Relies on the configured reservations file being used by 
 # /etc/dhcp/dhcpd.conf via an include statement
-# Usage: ./dhcpconfman.pl MAC-ADDRESS IP
+# Usage: ./dhcpconfman.pl MAC-ADDRESS IP USER-NAME
 use strict;
 require "dhcpconfman.cfg";
 use Regexp::Common qw /net/;
