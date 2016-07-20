@@ -1,0 +1,9 @@
+# dhcpconfman
+You will need to add a file: dhcpconfman.cfg to the code directory like so:
+------ BEGIN EXAMPLE
+$reservationsFile = "LOCATION OF THE RESERVATION FILE";
+%dnsDomainMappings = (
+    "10.10." => "localdomain1.org",
+    "10.11." => "localdomain2.org"
+);
+------ END EXAMPLE
