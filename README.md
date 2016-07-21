@@ -2,7 +2,7 @@
 ## Requirements:
  * Ubuntu: libregexp-common-net-cidr-perl
  * CentOS: epel-release, perl-Regexp-Common
- ** ---> Or if you don't like EPEL - just CPAN it
+ * ---> Or if you don't like EPEL - just CPAN it
  NOTE: The dhcpd restart at the end uses systemctl. If your system doesn't
  have systemctl, you'll obviously have to use /etc/init.d/dhcpd or something
  similar. systemctl works on CentOS 7, and newer versions of Ubuntu.
@@ -24,13 +24,13 @@ mapping Classful Subnets to DNS domains. Note this is currently just configured 
 
 ## Setup
 You will need to add a file: dhcpconfman.cfg to the code directory like so:
------- BEGIN EXAMPLE
+#### BEGIN EXAMPLE
     $reservationsFile = "LOCATION OF THE RESERVATION FILE";
     %dnsDomainMappings = (
         "10.10." => "localdomain1.org",
         "10.11." => "localdomain2.org"
     );
------- END EXAMPLE
+#### END EXAMPLE
 * Make sure that dhcpd can read the $reservationsFile
 * Make sure the SELinux label is dhcp_etc_t for the file you create 
 (if using SELinux).
@@ -39,7 +39,7 @@ include "YOUR-FILE-LOCATION";
 
 
 Just for reference, here is an example /etc/dhcp/dhcpd.conf file
------- BEGIN EXAMPLE
+#### BEGIN EXAMPLE
     include "/apps/dhcpd.reservations";
 
     log-facility local7;
@@ -52,7 +52,7 @@ Just for reference, here is an example /etc/dhcp/dhcpd.conf file
       range dynamic-bootp 192.168.1.10 192.168.1.20;
       option routers 192.168.1.1;
     }
------- END EXAMPLE
+#### END EXAMPLE
 
 
 
