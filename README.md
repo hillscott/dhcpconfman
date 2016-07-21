@@ -21,6 +21,15 @@ It verifies that:
 It also allows dynamic DNS domain assignment in the config, based off of a hash
 mapping Classful Subnets to DNS domains. Note this is currently just configured for class B mapping. 
 
+It outputs static mappings such as the below:
+    ###
+    host joebob {
+      hardware ethernet 00:04:13:00:00:01;
+      fixed-address 192.168.1.5;
+      option domain-name "orgname.com";
+    }
+    ### Added Wed Jul 20 17:32:45 2016 
+
 
 ## Setup
 You will need to add a file: dhcpconfman.cfg to the code directory like so:
