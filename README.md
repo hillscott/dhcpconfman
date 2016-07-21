@@ -18,9 +18,6 @@ It verifies that:
 * IP-ADDRESS is a valid IP
 * None of the 3 arguments already exist in the config
 
-It also allows dynamic DNS domain assignment in the config, based off of a hash
-mapping Classful Subnets to DNS domains. Note this is currently just configured for class B mapping. 
-
 It outputs static mappings such as the below:
 ```
 ###
@@ -36,10 +33,6 @@ host joebob {
 You will need to add a file: dhcpconfman.cfg to the code directory like so:
 #### BEGIN EXAMPLE
     $reservationsFile = "LOCATION OF THE RESERVATION FILE";
-    %dnsDomainMappings = (
-        "10.10." => "localdomain1.org",
-        "10.11." => "localdomain2.org"
-    );
 #### END EXAMPLE
 * Make sure that dhcpd can read the $reservationsFile
 * Make sure the SELinux label is dhcp_etc_t for the file you create 
@@ -61,6 +54,7 @@ Just for reference, here is an example /etc/dhcp/dhcpd.conf file
     subnet 192.168.1.0 netmask 255.255.255.0 {
       range dynamic-bootp 192.168.1.10 192.168.1.20;
       option routers 192.168.1.1;
+      option domain-name "orgname.com";
     }
 #### END EXAMPLE
 

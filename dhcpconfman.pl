@@ -8,7 +8,7 @@
 use strict;
 require "dhcpconfman.cfg";
 use Regexp::Common qw /net/;
-our ($reservationsFile, %dnsDomainMappings);
+our ($reservationsFile);
 
 
 # The user did something wrong...
@@ -69,38 +69,17 @@ sub inUseCheck{
     print "Passed MAC-Address and IP-Address existence checks...\n";
 }
 
-# Generate the DNS domain based on the subnet
-sub dnsDomainSet{
-    my $ipAddy = shift;
-    my $macAddy = shift;
-    if ($ipAddy =~ /$RE{net}{IPv4}{-keep}/){
-        my $twoOctets = $2.".".$3.".";
-#        print $twoOctets."\n";
-        my $dnsDomain = $dnsDomainMappings{$twoOctets};
-        if (defined($dnsDomain)){
-            print "Found DNS Domain of ".$dnsDomain."\n";
-            return($dnsDomain); 
-        }
-        else{
-            print "You've entered an IP Address for a range that I don't know about...\n";
-            die "You'll need to add it to the hash mapping or correct your typo";
-        }
-    }
-}
-
 # Create the config statements and save to a buffer for writing out
 sub generateStatements{
     my $username = shift;
     my $ipAddy = shift;
     my $macAddy = shift;
-    my $dnsDomain = shift;
     open(my $fileHandle, ">>", $reservationsFile) or 
       die "Couldn't open reservations file for writing!";
     print $fileHandle "###\n";
     print $fileHandle "host $username"." {"."\n";
     print $fileHandle "  hardware ethernet $macAddy".";"."\n";
     print $fileHandle "  fixed-address $ipAddy".";"."\n";
-    print $fileHandle "  option domain-name \"$dnsDomain\"".";"."\n";
     print $fileHandle "}"."\n";
     print $fileHandle "### Added ".localtime()." \n";
     close $fileHandle;
@@ -111,9 +90,8 @@ sub generateStatements{
 # Run the subs
 my ($ipAddy, $macAddy, $username) = &usageCheck;
 &inUseCheck($ipAddy, $macAddy, $username);
-my $dnsDomain = &dnsDomainSet($ipAddy, $macAddy);
 # Write out the config changes
-&generateStatements($username, $ipAddy, $macAddy, $dnsDomain);
+&generateStatements($username, $ipAddy, $macAddy);
 # Reload DHCPd
 print "Reloading DHCPd - if this fails, you'll have to do it manually.\n";
 system("sudo systemctl restart dhcpd");
