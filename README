@@ -37,5 +37,25 @@ $reservationsFile = "LOCATION OF THE RESERVATION FILE";
 - Reference the file in /etc/dhcp/dhcpd.conf with:
 include "YOUR-FILE-LOCATION";
 
+
+Just for reference, here is an example /etc/dhcp/dhcpd.conf file
+------ BEGIN EXAMPLE
+include "/apps/dhcpd.reservations";
+
+log-facility local7;
+option domain-name-servers 192.168.1.1, 192.168.1.2;
+
+default-lease-time 1800;
+max-lease-time 7200;
+authoritative;
+subnet 192.168.1.0 netmask 255.255.255.0 {
+  range dynamic-bootp 192.168.1.10 192.168.1.20;
+  option routers 192.168.1.1;
+}
+------ END EXAMPLE
+
+
+
+
 Ian Reynolds
 The MIS Department
