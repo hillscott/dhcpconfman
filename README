@@ -1,6 +1,14 @@
 # dhcpconfman
-This perl script takes 3 arguments:
-MAC-ADDRESS IP-ADDRESS USER-NAME
+Requirements:
+ Ubuntu: libregexp-common-net-cidr-perl
+ CentOS: epel-release, perl-Regexp-Common
+ ---> Or if you don't like EPEL - just CPAN it
+ NOTE: The dhcpd restart at the end uses systemctl. If your system doesn't
+ have systemctl, you'll obviously have to use /etc/init.d/dhcpd or something
+ similar. systemctl works on CentOS 7, and newer versions of Ubuntu.
+
+Description:
+This perl script takes 3 arguments: MAC-ADDRESS IP-ADDRESS USER-NAME
 It then generates a host entry for dhcpd static reservations.
 Of course you could manually add these, but this script is designed to prevent
 fat fingering / breaking the config. 
@@ -11,7 +19,8 @@ It verifies that:
 - None of the 3 arguments already exist in the config
 
 It also allows dynamic DNS domain assignment in the config, based off of a hash
-mapping Classful Subnets to DNS domains. 
+mapping Classful Subnets to DNS domains. Note this is currently just configured for class B mapping. 
+
 
 
 You will need to add a file: dhcpconfman.cfg to the code directory like so:
@@ -22,7 +31,11 @@ $reservationsFile = "LOCATION OF THE RESERVATION FILE";
     "10.11." => "localdomain2.org"
 );
 ------ END EXAMPLE
-
+- Make sure that dhcpd can read the $reservationsFile
+- Make sure the SELinux label is dhcp_etc_t for the file you create 
+(if using SELinux).
+- Reference the file in /etc/dhcp/dhcpd.conf with:
+include "YOUR-FILE-LOCATION";
 
 Ian Reynolds
 The MIS Department

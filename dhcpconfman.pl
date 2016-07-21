@@ -115,3 +115,5 @@ my $dnsDomain = &dnsDomainSet($ipAddy, $macAddy);
 # Write out the config changes
 &generateStatements($username, $ipAddy, $macAddy, $dnsDomain);
 # Reload DHCPd
+print "Reloading DHCPd - if this fails, you'll have to do it manually.\n";
+system("sudo systemctl restart dhcpd");
