@@ -1,5 +1,5 @@
 # dhcpconfman
-Requirements:
+## Requirements:
  Ubuntu: libregexp-common-net-cidr-perl
  CentOS: epel-release, perl-Regexp-Common
  ---> Or if you don't like EPEL - just CPAN it
@@ -7,7 +7,7 @@ Requirements:
  have systemctl, you'll obviously have to use /etc/init.d/dhcpd or something
  similar. systemctl works on CentOS 7, and newer versions of Ubuntu.
 
-Description:
+## Description:
 This perl script takes 3 arguments: MAC-ADDRESS IP-ADDRESS USER-NAME
 It then generates a host entry for dhcpd static reservations.
 Of course you could manually add these, but this script is designed to prevent
@@ -22,7 +22,7 @@ It also allows dynamic DNS domain assignment in the config, based off of a hash
 mapping Classful Subnets to DNS domains. Note this is currently just configured for class B mapping. 
 
 
-
+## Setup
 You will need to add a file: dhcpconfman.cfg to the code directory like so:
 ------ BEGIN EXAMPLE
 $reservationsFile = "LOCATION OF THE RESERVATION FILE";
@@ -57,5 +57,5 @@ subnet 192.168.1.0 netmask 255.255.255.0 {
 
 
 
-Ian Reynolds
-The MIS Department
+### Ian Reynolds
+### The MIS Department
